@@ -9,8 +9,8 @@
         <module name="Money-Manager" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Money-Manager" target="1.5" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="Money-Manager" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
