@@ -1,6 +1,7 @@
 package com.pyesmeadow.george.moneymanager.payment;
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,6 +11,7 @@ import java.util.List;
 public class Repetition {
 
 	private Calendar startDate;
+	@Nullable
 	private Calendar endDate;
 	private RepetitionType type;
 	private int interval;
@@ -25,7 +27,7 @@ public class Repetition {
 	 * @param startDate start date of repetition
 	 * @param endDate   end date of repetition
 	 */
-	public Repetition(RepetitionType type, int interval, Calendar startDate, Calendar endDate)
+	public Repetition(RepetitionType type, int interval, Calendar startDate, @Nullable Calendar endDate)
 	{
 		this.type = type;
 		this.interval = interval;
@@ -33,15 +35,32 @@ public class Repetition {
 		this.endDate = endDate;
 	}
 
-	public List<Calendar> getDates()
+	public List<Calendar> getDatesBetween(Calendar bound1, Calendar bound2)
 	{
 		Calendar date = startDate;
+		Calendar latestDate;
+
+		// If the repetition has an end date and it isn't out of bounds, use it as the last repetition
+		if (endDate != null && !endDate.after(bound2))
+		{
+			latestDate = endDate;
+		}
+		else
+		// Otherwise, use the second bound
+		{
+			latestDate = bound2;
+		}
+
 		List<Calendar> dateList = new ArrayList<>();
 
 		// While date is before end date
-		while (date.compareTo(endDate) <= 0)
+		while (!date.after(latestDate))
 		{
-			dateList.add(date);
+			if (!date.before(bound1))
+			{
+				dateList.add(date);
+			}
+
 			getNextDate(date);
 		}
 

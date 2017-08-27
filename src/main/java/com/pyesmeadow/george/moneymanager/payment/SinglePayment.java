@@ -1,5 +1,8 @@
 package com.pyesmeadow.george.moneymanager.payment;
 
+import com.pyesmeadow.george.moneymanager.util.DateUtils;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -8,7 +11,7 @@ public class SinglePayment extends Payment {
 
 	private Calendar paymentDate;
 
-	public SinglePayment(double paymentAmount, String recipient, Calendar paymentDate)
+	public SinglePayment(BigDecimal paymentAmount, String recipient, Calendar paymentDate)
 	{
 		super(paymentAmount, recipient);
 
@@ -16,10 +19,15 @@ public class SinglePayment extends Payment {
 	}
 
 	@Override
-	public List<Calendar> getPaymentDates()
+	public List<Calendar> getPaymentDatesBetween(Calendar bound1, Calendar bound2)
 	{
 		List<Calendar> paymentDateList = new ArrayList<>();
-		paymentDateList.add(paymentDate);
+
+		if (DateUtils.isDateInRange(paymentDate, bound1, bound2))
+		{
+			paymentDateList.add(paymentDate);
+		}
+
 		return paymentDateList;
 	}
 }

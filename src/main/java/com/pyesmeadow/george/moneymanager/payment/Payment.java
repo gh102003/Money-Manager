@@ -1,21 +1,22 @@
 package com.pyesmeadow.george.moneymanager.payment;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class Payment {
 
-	private double paymentAmount;
+	private BigDecimal amount;
 	private String recipient;
 
-	public Payment(double paymentAmount, String recipient)
+	public Payment(BigDecimal amount, String recipient)
 	{
-		this.paymentAmount = paymentAmount;
+		this.amount = amount;
 		this.recipient = recipient;
 	}
 
-	public abstract List<Calendar> getPaymentDates();
+	public abstract List<Calendar> getPaymentDatesBetween(Calendar bound1, Calendar bound2);
 
 	public String getRecipient()
 	{
@@ -27,13 +28,13 @@ public abstract class Payment {
 		this.recipient = recipient;
 	}
 
-	public double getPaymentAmount()
+	public BigDecimal getAmount()
 	{
-		return paymentAmount;
+		return amount;
 	}
 
-	public void setPaymentAmount(double paymentAmount)
+	public void setAmount(BigDecimal amount)
 	{
-		this.paymentAmount = paymentAmount;
+		this.amount = amount;
 	}
 }

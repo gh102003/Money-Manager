@@ -1,5 +1,6 @@
 package com.pyesmeadow.george.moneymanager.payment;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class RepeatingPayment extends Payment {
 
 	private Repetition repetition;
 
-	public RepeatingPayment(double paymentAmount, String recipient, Repetition repetition)
+	public RepeatingPayment(BigDecimal paymentAmount, String recipient, Repetition repetition)
 	{
 		super(paymentAmount, recipient);
 
@@ -16,8 +17,8 @@ public class RepeatingPayment extends Payment {
 	}
 
 	@Override
-	public List<Calendar> getPaymentDates()
+	public List<Calendar> getPaymentDatesBetween(Calendar bound1, Calendar bound2)
 	{
-		return repetition.getDates();
+		return repetition.getDatesBetween(bound1, bound2);
 	}
 }
